@@ -1,5 +1,6 @@
 *** Settings ***
 Library  RequestsLibrary
+Library  Collections
 Resource  ../variables/variables.robot
 
 *** Variables ***
@@ -15,8 +16,8 @@ Efetuar Login e Gerar Token
     ...  password=${PASSWORD}
     
     ${response}=  Post On Session  auth  ${AUTH_ENDPOINT}  json=${request}
-    
-    Log To Console   Response: ${response.txt}
+
+    Log To Console   Response: ${response.json()}
 
     Should Be Equal As Integers   ${response.status_code}    200
 
