@@ -1,0 +1,13 @@
+*** Settings ***
+Library  RequestsLibrary
+Library  Collections
+Resource  ../../variables/variables.robot
+Resource  ../../resources/bookingResource.robot
+
+*** Test Cases ***
+Cenario 1 - Listar Todos os Ids de Bookings na Api 
+    
+    [Tags]  getBookingIds  smoke
+    ${response}=   Listar Todos os Ids de Bookings na Api Filtrados Por Nome  #sally  brown
+    Log To Console   Lista de Ids: ${response.json()}
+    Should Not Be Empty   ${response.json()}
