@@ -14,7 +14,7 @@ Cenario 1 - Listar Todos os Ids de Bookings na Api
 Cenario 2 - Listar Todos os Ids de Bookings na Api Filtrados Por Nome
     
     [Tags]  getBookingIds  smoke
-    ${response}=   Listar Todos os Ids de Bookings na Api Filtrados Por Nome  Sally  Brown
+    ${response}=   Listar Todos os Ids de Bookings na Api Filtrados Por Nome  Mary  Jackson
     Log To Console   Lista de Ids: ${response.json()}
     Should Not Be Empty   ${response.json()}
 Cenario 3 - Listar Todos os Ids de Bookings na Api Filtrados Por Nome e Sobrenome Inexistentes
