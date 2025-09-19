@@ -3,6 +3,8 @@ Library  RequestsLibrary
 Library  Collections
 Resource  ../../variables/variables.robot
 Resource  ../../resources/bookingResource.robot
+Suite Setup  Create Session  booking  ${BASE_URL}
+Suite Teardown  Delete All Sessions
 
 *** Test Cases ***
 Cenario 1 - Listar Todos os Ids de Bookings na Api 

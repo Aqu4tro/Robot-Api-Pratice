@@ -3,6 +3,7 @@ Library  RequestsLibrary
 Library  Collections
 Resource  ../../variables/variables.robot
 Resource  ../../resources/pingResources.robot
+Suite Teardown  Delete All Sessions
 
 *** Test Cases ***
 Validar se a API está no ar
