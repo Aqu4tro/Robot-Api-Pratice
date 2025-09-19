@@ -35,6 +35,7 @@ Cenario 2 - Criar Novo Booking Com Dados Incompletos
     Log To Console   Booking Criado com dados incompletos: ${response}
     Should Be Equal As Integers  ${response.status_code}  500
 
+# Defeito encontrado na API, deveria retornar 400 Bad Request, mas está retornando 200 OK
 Cenario 3 - Criar Novo Booking Com Dados Inválidos
     [Tags]  postBookingCreate  regression
     ${booking_dates}=  Create Dictionary

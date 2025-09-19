@@ -35,9 +35,16 @@ Encontrar Booking Pelo Id
     [Arguments]  ${id}
     Create Session   booking  ${BASE_URL}
     ${result}=  Run Keyword And Ignore Error  Get On Session  booking  url=${BOOKING_ENDPOINT}/${id}
-    
     ${status}=  Set Variable  ${result[0]} 
     ${resp}=    Set Variable  ${result[1]}  
     ${response}=  Run Keyword If  '${resp.__class__.__name__}'=='Response'  Set Variable  ${resp}  ELSE  Set Variable  None
-    [Return]  ${response}
+    RETURN   ${response}
 
+Criar Novo Booking
+    [Documentation]  Realiza um post no endpoint /booking criando um novo booking com os dados passados no parametro
+    [Arguments]  ${json_body}
+    Create Session   booking  ${BASE_URL}
+    ${headers}=  Create Dictionary  
+    ...  Content-Type=application/json
+    ${response}=  Post On Session  booking  url=${BOOKING_ENDPOINT}  json=${json_body}  headers=${headers}  expected_status=any
+    RETURN    ${response}
