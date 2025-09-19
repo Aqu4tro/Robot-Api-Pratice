@@ -22,6 +22,7 @@ Cenario 1 - Criar Novo Booking Com Sucesso
     Should Be Equal As Integers  ${response.status_code}  200
     Log To Console   Booking Criado: ${response.json()}
     Should Not Be Empty   ${response.json()}
+    Set Global Variable    ${BookingId}    ${response.json()['bookingid']}
 
 Cenario 2 - Criar Novo Booking Com Dados Incompletos
     [Tags]  postBookingCreate  regression
@@ -49,6 +50,5 @@ Cenario 3 - Criar Novo Booking Com Dados Inválidos
     ...  bookingdates=${booking_dates}
     ...  additionalneeds=Dinner
     ${response}=  Criar Novo Booking  ${json_body}
-    
     Log To Console   Booking Criado com dados inválidos: ${response}
     Should Be Equal As Integers  ${response.status_code}  200

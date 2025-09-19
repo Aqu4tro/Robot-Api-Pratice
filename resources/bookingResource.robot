@@ -47,4 +47,17 @@ Criar Novo Booking
     ${headers}=  Create Dictionary  
     ...  Content-Type=application/json
     ${response}=  Post On Session  booking  url=${BOOKING_ENDPOINT}  json=${json_body}  headers=${headers}  expected_status=any
+    
+    RETURN    ${response}
+
+Atualizar Booking Pelo Id
+    [Documentation]  Realiza um put no endpoint /booking/{id} atualizando o
+    [Arguments]  ${id}  ${json_body}  ${token}
+    Create Session   booking  ${BASE_URL}
+    ${headers}=  Create Dictionary
+    ...  Content-Type=application/json
+    ...  Cookie=token=${token}
+    # Authorization=Basic ${token}  # Caso queira usar Basic Auth
+    ${response}=  Put On Session  booking  url=${BOOKING_ENDPOINT}/${id}
+    ...  json=${json_body}  headers=${headers}  expected_status=any
     RETURN    ${response}
