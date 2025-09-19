@@ -44,3 +44,11 @@ Cenario 2 - Tentar Deletar Booking Sem Token de Autenticação
     ${response}=  Deletar Booking Pelo Id  ${BookingId.json()['bookingid']}  token inválido
     Should Be Equal As Integers  ${response.status_code}  403
     Log To Console   Resposta ao tentar deletar sem token: ${response}
+
+Cenario 3 - Tentar Deletar Booking Inexistente
+    [Documentation]  Tentar deletar um booking que não existe.
+    [Tags]  deleteBooking  negativo
+    ${token}=  Efetuar Login e Gerar Token 
+    ${response}=  Deletar Booking Pelo Id  -5  ${token}  # Usando um ID que provavelmente não existe
+    Should Be Equal As Integers  ${response.status_code}  405
+    Log To Console   Resposta ao tentar deletar booking inexistente: ${response}
