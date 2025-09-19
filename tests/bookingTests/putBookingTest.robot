@@ -71,3 +71,21 @@ Cenario 2 - Tentar Alterar Booking Sem Token de Autenticação
     Should Be Equal As Integers  ${atualizar_response.status_code}  403
     Log To Console   Erro ao tentar alterar booking sem token: ${atualizar_response}
 
+Cenario 3 - Tentar Alterar Booking com ID Inexistente
+    [Documentation]  Tentar atualizar um booking com um ID que não existe.
+    [Tags]  putBooking  negativo
+    ${token}=  Efetuar Login e Gerar Token
+    ${booking_dates}=  Create Dictionary
+    ...  checkin=2023-11-01
+    ...  checkout=2023-11-15
+    ${atualizar_booking_body}=  Create Dictionary
+    ...  firstname=Jane
+    ...  lastname=Doe
+    ...  totalprice=251
+    ...  depositpaid=False
+    ...  bookingdates=${booking_dates}
+    ...  additionalneeds=Late Checkout
+    ${invalid_id}=  Set Variable  -5  # ID que provavelmente não existe
+    ${atualizar_response}=   Atualizar Booking Pelo Id  ${invalid_id}  ${atualizar_booking_body}  ${token}
+    Should Be Equal As Integers  ${atualizar_response.status_code}  405
+    Log To Console   Erro ao tentar alterar booking com ID inexistente: ${atualizar_response}
