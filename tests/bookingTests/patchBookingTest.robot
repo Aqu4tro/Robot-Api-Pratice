@@ -58,3 +58,16 @@ Cenario 2 - Tentar Alterar Booking Parcialmente(PATCH) Sem Token de Autenticaç�
     ${atualizar_response}=   Atualizar Booking Parcialmente Pelo Id  ${BOOKING.json()['bookingid']}  ${atualizar_booking_body}  token inválido
     Should Be Equal As Integers  ${atualizar_response.status_code}  403
     Log To Console   Resposta ao tentar atualizar parcialmente sem token: ${atualizar_response}
+
+Cenario 3 - Tentar Alterar Booking Parcialmente(PATCH) Com Id Inexistente
+    [Documentation]  Tentar atualizar parcialmente um booking com um id que não existe na base de dados.
+    [Tags]  patchBooking  negativo
+    # Usar um id que não existe, por exemplo 99999 ou qualquer outro número alto.
+    ${invalid_booking_id}=  Set Variable  -5
+    ${atualizar_booking_body}=  Create Dictionary
+    ...  firstname=Jane
+    ...  totalprice=251
+    ${token}=  Efetuar Login e Gerar Token 
+    ${atualizar_response}=   Atualizar Booking Parcialmente Pelo Id  ${invalid_booking_id}  ${atualizar_booking_body}  ${token}
+    Should Be Equal As Integers  ${atualizar_response.status_code}  405
+    Log To Console   Resposta ao tentar atualizar parcialmente com id inexistente: ${atualizar_response}
