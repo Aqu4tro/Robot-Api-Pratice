@@ -61,3 +61,15 @@ Atualizar Booking Pelo Id
     ${response}=  Put On Session  booking  url=${BOOKING_ENDPOINT}/${id}
     ...  json=${json_body}  headers=${headers}  expected_status=any
     RETURN    ${response}
+
+Atualizar Booking Parcialmente Pelo Id
+    [Documentation]  Realiza um patch no endpoint /booking/{id} atualizando parcialmente o booking com os dados passados no parametro
+    [Arguments]  ${id}  ${json_body}  ${token}
+    Create Session   booking  ${BASE_URL}
+    ${headers}=  Create Dictionary
+    ...  Content-Type=application/json
+    ...  Cookie=token=${token}
+    # Authorization=Basic ${token}  # Caso queira usar Basic Auth
+    ${response}=  Patch On Session  booking  url=${BOOKING_ENDPOINT}/${id}
+    ...  json=${json_body}  headers=${headers}  expected_status=any
+    RETURN    ${response}
