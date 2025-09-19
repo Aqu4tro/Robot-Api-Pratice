@@ -34,3 +34,20 @@ Cenario 2 - Criar Novo Booking Com Dados Incompletos
     
     Log To Console   Booking Criado com dados incompletos: ${response}
     Should Be Equal As Integers  ${response.status_code}  500
+
+Cenario 3 - Criar Novo Booking Com Dados Inválidos
+    [Tags]  postBookingCreate  regression
+    ${booking_dates}=  Create Dictionary
+    ...  checkin=invalid-date
+    ...  checkout=2023-10-10
+    ${json_body}=  Create Dictionary
+    ...  firstname=Alice
+    ...  lastname=Smith
+    ...  totalprice=-50
+    ...  depositpaid=yes
+    ...  bookingdates=${booking_dates}
+    ...  additionalneeds=Dinner
+    ${response}=  Criar Novo Booking  ${json_body}
+    
+    Log To Console   Booking Criado com dados inválidos: ${response}
+    Should Be Equal As Integers  ${response.status_code}  200
