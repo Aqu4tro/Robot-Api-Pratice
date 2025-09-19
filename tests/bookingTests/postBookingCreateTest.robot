@@ -1,0 +1,25 @@
+*** Settings ***
+Library  RequestsLibrary
+Library  Collections
+Resource  ../../variables/variables.robot
+Resource  ../../resources/bookingResource.robot
+
+
+*** Test Cases ***
+Cenario 1 - Criar Novo Booking Com Sucesso
+    [Tags]  postBookingCreate  smoke
+    ${booking_dates}=  Create Dictionary
+    ...  checkin=2023-10-01
+    ...  checkout=2023-10-10
+    ${json_body}=  Create Dictionary
+    ...  firstname=John
+    ...  lastname=Doe
+    ...  totalprice=150
+    ...  depositpaid=True
+    ...  bookingdates=${booking_dates}
+    ...  additionalneeds=Breakfast
+    ${response}=  Criar Novo Booking  ${json_body}
+    Should Be Equal As Integers  ${response.status_code}  200
+    Log To Console   Booking Criado: ${response.json()}
+    Should Not Be Empty   ${response.json()}
+
