@@ -39,3 +39,35 @@ Cenario 1 - Alterar Booking Com Sucesso
     ${updated_totalprice}=  Get From Dictionary  ${atualizar_response.json()}  totalprice
     Should Be Equal As Integers  ${updated_totalprice}  251
     Log To Console   Booking Atualizado: ${atualizar_response.json()}
+
+Cenario 2 - Tentar Alterar Booking Sem Token de Autenticação
+    [Documentation]  Tentar atualizar um booking existente sem fornecer um token de autenticação.
+    [Tags]  putBooking  negativo
+    # Booking já deve existir, no caso use um booking criado anteriormente ou crie um novo
+    ${criar_booking_body}=  Create Dictionary
+    ...  firstname=John
+    ...  lastname=Doe
+    ...  totalprice=150
+    ...  depositpaid=True
+    ...  bookingdates=${EMPTY}
+    ...  additionalneeds=Breakfast
+    ${booking_dates}=  Create Dictionary  
+    ...  checkin=2023-10-01
+    ...  checkout=2023-10-10
+    Set To Dictionary  ${criar_booking_body}  bookingdates=${booking_dates}
+    ${BOOKING}=  Criar Novo Booking   ${criar_booking_body}
+    # Tentar atualizar o booking criado anteriormente sem token.
+    ${booking_dates}=  Create Dictionary  
+    ...  checkin=2023-11-01
+    ...  checkout=2023-11-15
+    ${atualizar_booking_body}=  Create Dictionary
+    ...  firstname=Jane
+    ...  lastname=Doe
+    ...  totalprice=251
+    ...  depositpaid=False
+    ...  bookingdates=${booking_dates}
+    ...  additionalneeds=Late Checkout
+    ${atualizar_response}=   Atualizar Booking Pelo Id  ${BOOKING.json()['bookingid']}  ${atualizar_booking_body}  token inválido
+    Should Be Equal As Integers  ${atualizar_response.status_code}  403
+    Log To Console   Erro ao tentar alterar booking sem token: ${atualizar_response}
+
