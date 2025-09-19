@@ -73,3 +73,12 @@ Atualizar Booking Parcialmente Pelo Id
     ${response}=  Patch On Session  booking  url=${BOOKING_ENDPOINT}/${id}
     ...  json=${json_body}  headers=${headers}  expected_status=any
     RETURN    ${response}
+Deletar Booking Pelo Id
+    [Documentation]  Realiza um delete no endpoint /booking/{id} deletando o booking com o id passado no parametro
+    [Arguments]  ${id}  ${token}
+    Create Session   booking  ${BASE_URL}
+    ${headers}=  Create Dictionary
+    ...  Cookie=token=${token}
+    # Authorization=Basic ${token}  # Caso queira usar Basic Auth
+    ${response}=  Delete On Session  booking  url=${BOOKING_ENDPOINT}/${id}  headers=${headers}  expected_status=any
+    RETURN    ${response}
