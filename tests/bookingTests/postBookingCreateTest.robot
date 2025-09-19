@@ -23,3 +23,14 @@ Cenario 1 - Criar Novo Booking Com Sucesso
     Log To Console   Booking Criado: ${response.json()}
     Should Not Be Empty   ${response.json()}
 
+Cenario 2 - Criar Novo Booking Com Dados Incompletos
+    [Tags]  postBookingCreate  regression
+    ${json_body}=  Create Dictionary
+    ...  firstname=Jane
+    ...  totalprice=100
+    ...  depositpaid=False
+    ...  additionalneeds=Lunch
+    ${response}=  Criar Novo Booking  ${json_body}
+    
+    Log To Console   Booking Criado com dados incompletos: ${response}
+    Should Be Equal As Integers  ${response.status_code}  500
