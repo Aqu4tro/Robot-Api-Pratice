@@ -4,7 +4,8 @@ Library  Collections
 Resource  ../../variables/variables.robot
 Resource  ../../resources/bookingResource.robot
 Resource    ../../resources/authResource.robot
-
+Suite Setup  Create Session  booking  ${BASE_URL}
+Suite Teardown  Delete All Sessions
 
 *** Test Cases ***
 Cenario 1 - Deletar Booking Com Sucesso

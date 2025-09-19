@@ -1,5 +1,6 @@
 *** Settings ***
 Resource  /home/aqu4tro/Desktop/Robot-Api-Pratice/resources/authResource.robot
+Suite Teardown  Delete All Sessions
 
 *** Test Cases ***
 Cenario 1 - Login efetuado e Token Gerado Com Sucesso
